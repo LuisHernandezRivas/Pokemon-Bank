@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis de Transacciones</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="bootstrap-5.3.3-dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .chart-container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+            padding: 30px;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .btn-custom {
+            background-color: #f44336;
+            color: #fff;
+        }
+
+            .btn-custom:hover {
+                background-color: #d32f2f;
+            }
+    </style>
+</head>
+<body>
+    <div class="chart-container">
+        <h2 class="text-center mb-4">Análisis de Transacciones</h2>
+
+        <canvas id="transaction-chart" class="mb-4"></canvas>
+
+        <ul class="list-group mb-4">
+            <li class="list-group-item">Total Depósitos: <strong id="total-depositos">$0.00</strong></li>
+            <li class="list-group-item">Total Retiros: <strong id="total-retiros">$0.00</strong></li>
+            <li class="list-group-item">Total Pagos de Servicios: <strong id="total-pagos">$0.00</strong></li>
+            <li class="list-group-item">Saldo Total: <strong id="saldo-total">$0.00</strong></li>
+        </ul>
+
+        <a href="acciones.html" class="btn btn-custom w-100">Regresar</a>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        const usuario = localStorage.getItem("cuenta");
+        let transacciones = JSON.parse(localStorage.getItem(`transacciones_${usuario}`)) || [];
+
+        let tipos = {
+            "Depósito": 0,
+            "Retiro": 0,
+            "Pago de Energía Eléctrica": 0,
+            "Pago de Internet": 0,
+            "Pago de Telefonía": 0,
+            "Pago de Agua Potable": 0
+        };
+
+        transacciones.forEach(t => {
+            if (tipos[t.tipo] !== undefined) tipos[t.tipo] += t.monto;
+        });
+
+        document.getElementById("total-depositos").innerText = `$${tipos["Depósito"].toFixed(2)}`;
+        document.getElementById("total-retiros").innerText = `$${tipos["Retiro"].toFixed(2)}`;
+        document.getElementById("total-pagos").innerText = `$${(tipos["Pago de Energía Eléctrica"] + tipos["Pago de Internet"] + tipos["Pago de Telefonía"] + tipos["Pago de Agua Potable"]).toFixed(2)}`;
+
+        let saldoTotal = tipos["Depósito"] - tipos["Retiro"] - (tipos["Pago de Energía Eléctrica"] + tipos["Pago de Internet"] + tipos["Pago de Telefonía"] + tipos["Pago de Agua Potable"]);
+        document.getElementById("saldo-total").innerText = `$${saldoTotal.toFixed(2)}`;
+
+        new Chart(document.getElementById("transaction-chart"), {
+            type: 'bar',
+            data: {
+                labels: Object.keys(tipos),
+                datasets: [{
+                    label: 'Monto en USD',
+                    data: Object.values(tipos),
+                    backgroundColor: ['#4caf50', '#f44336', '#ff9800', '#3f51b5', '#00bcd4', '#8bc34a'],
+                    borderColor: ['#4caf50', '#f44336', '#ff9800', '#3f51b5', '#00bcd4', '#8bc34a'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: { y: { beginAtZero: true, ticks: { callback: value => `$${value}` } } },
+                plugins: { tooltip: { callbacks: { label: tooltipItem => `$${tooltipItem.raw.toFixed(2)}` } } }
+            }
+        });
+    </script>
+</body>
+</html>

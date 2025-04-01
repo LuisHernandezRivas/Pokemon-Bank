@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú de Retiro</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="bootstrap-5.3.3-dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .transaction-container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+            padding: 30px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .btn-custom {
+            background-color: #4facfe;
+            color: #fff;
+        }
+
+            .btn-custom:hover {
+                background-color: #00c6ff;
+            }
+
+        .btn-return {
+            background-color: #f44336;
+            color: #fff;
+        }
+
+            .btn-return:hover {
+                background-color: #d32f2f;
+            }
+    </style>
+</head>
+<body>
+    <div class="transaction-container">
+        <h2 class="text-center mb-4">Menú de Retiro</h2>
+
+        <div id="alert-container"></div>
+
+        <div class="mb-3">
+            <label for="monto-retiro" class="form-label">Monto a retirar:</label>
+            <input type="number" class="form-control" id="monto-retiro" step="0.01" required>
+        </div>
+
+        <button class="btn btn-custom w-100 mb-2" onclick="retirar()">Retirar</button>
+        <a href="acciones.html" class="btn btn-return w-100">Regresar</a>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function retirar() {
+            let monto = parseFloat(document.getElementById("monto-retiro").value);
+            let saldo = calcularSaldo();
+            let fecha = new Date();
+            const alertContainer = document.getElementById("alert-container");
+            alertContainer.innerHTML = "";
+
+            if (!isNaN(monto) && monto > 0 && monto <= saldo) {
+                const usuario = localStorage.getItem("cuenta");
+
+                if (usuario) {
+                    let transacciones = JSON.parse(localStorage.getItem(`transacciones_${usuario}`)) || [];
+                    transacciones.push({ tipo: "Retiro", monto: monto, fecha: fecha.toISOString() });
+                    localStorage.setItem(`transacciones_${usuario}`, JSON.stringify(transacciones));
+
+                    alertContainer.innerHTML = `
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>Éxito:</strong> Retiro realizado con éxito.
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                            </div>
+                        `;
+
+                    setTimeout(() => {
+                        window.location.href = "saldo.html";
+                    }, 1500);
+
+                } else {
+                    alertContainer.innerHTML = `
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>Error:</strong> No se encontró un usuario logueado.
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                            </div>
+                        `;
+                }
+            } else {
+                alertContainer.innerHTML = `
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>Error:</strong> Fondos insuficientes o monto inválido.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                        </div>
+                    `;
+            }
+        }
+
+        function calcularSaldo() {
+            const usuario = localStorage.getItem("cuenta");
+            let saldo = 0;
+            let transacciones = JSON.parse(localStorage.getItem(`transacciones_${usuario}`)) || [];
+
+            transacciones.forEach(transaccion => {
+                if (transaccion.tipo === "Depósito") saldo += transaccion.monto;
+                else if (transaccion.tipo === "Retiro" || transaccion.tipo.includes("Pago de")) saldo -= transaccion.monto;
+            });
+
+            return saldo;
+        }
+    </script>
+</body>
+</html>

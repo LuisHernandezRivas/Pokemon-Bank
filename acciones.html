@@ -1,0 +1,103 @@
+<!DOCTYPE html>  
+<html lang="es">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Pokémon Bank - Acciones</title>  
+    <link rel="stylesheet" href="bootstrap-5.3.3-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">  
+    <style>  
+        body {  
+            font-family: Arial, sans-serif;  
+            background: linear-gradient(to right, #4facfe, #00f2fe);  
+            display: flex;  
+            justify-content: center;  
+            align-items: center;  
+            height: 100vh;  
+            margin: 0;  
+            text-align: center;  
+        }  
+
+        .actions-container {  
+            background: white;  
+            padding: 20px;  
+            border-radius: 10px;  
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);  
+            text-align: center;  
+            width: 350px;  
+        }  
+
+        h2 {  
+            color: #333;  
+            margin-bottom: 10px;  
+        }  
+
+        p {  
+            color: #666;  
+            font-size: 14px;  
+            margin-bottom: 20px;  
+        }  
+
+        .actions a {  
+            text-decoration: none;  
+            display: block;  
+            margin: 10px 0;  
+        }  
+
+        button {  
+            width: 100%;  
+            padding: 10px;  
+            border: none;  
+            border-radius: 5px;  
+            background: #4facfe;  
+            color: white;  
+            font-size: 16px;  
+            cursor: pointer;  
+            transition: 0.3s;  
+        }  
+
+        button:hover {  
+            background: #00c6ff;  
+        }  
+    </style>  
+</head>  
+<body>
+    <div class="actions-container">
+        <h2 id="nombre-usuario"></h2>
+        <p id="numero-cuenta"></p>
+        <div class="actions">
+            <a href="deposito.html" class="btn btn-primary w-100 my-2">Depositar</a>
+            <a href="retiro.html" class="btn btn-primary w-100 my-2">Retirar</a>
+            <a href="saldo.html" class="btn btn-primary w-100 my-2">Consultar Saldo</a>
+            <a href="pago.html" class="btn btn-primary w-100 my-2">Pagar Servicios</a>
+            <a href="historial.html" class="btn btn-primary w-100 my-2">Historial de Transacciones</a>
+            <a href="grafico.html" class="btn btn-primary w-100 my-2">Análisis de Transacciones</a>
+            <a href="index.html" class="btn btn-danger w-100 my-2">Salir</a>
+        </div>
+    </div>
+
+    <script>
+        // Objeto que relaciona cuentas con nombres de usuario
+        let cuentas = {
+            "1001-2233-4455-6677": "Christian Alfaro",
+            "2002-3344-5566-7788": "Luis Hernandez",
+            "3003-4455-6677-8899": "Raquel Saenz",
+            "4004-5566-7788-9900": "Gerardo Zelaya"
+        };
+
+        // Obtener la cuenta actual del usuario desde localStorage
+        let cuentaActual = localStorage.getItem("cuenta");
+
+        // Verificar si existe una sesión activa
+        if (cuentaActual && cuentas[cuentaActual]) {
+            // Mostrar el nombre del usuario y el número de cuenta
+            document.getElementById("nombre-usuario").innerText = "Bienvenido, " + cuentas[cuentaActual];
+            document.getElementById("numero-cuenta").innerText = "Número de cuenta: " + cuentaActual;
+        } else {
+            // Si no hay sesión activa, redirigir a la página de inicio
+            window.location.href = "index.html";
+        }
+    </script>
+    <script src="bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
+</body>  
+</html>  
