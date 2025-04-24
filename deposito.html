@@ -64,49 +64,6 @@
 
     <!-- Bootstrap JS desde CDN -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-    <script>
-        function depositar() {
-            let monto = parseFloat(document.getElementById("monto-deposito").value);
-            let fecha = new Date();
-            const alertContainer = document.getElementById("alert-container");
-            alertContainer.innerHTML = "";
-
-            if (!isNaN(monto) && monto > 0) {
-                const usuario = localStorage.getItem("cuenta");
-
-                if (usuario) {
-                    let transacciones = JSON.parse(localStorage.getItem(`transacciones_${usuario}`)) || [];
-                    transacciones.push({ tipo: "Depósito", monto: monto, fecha: fecha.toISOString() });
-                    localStorage.setItem(`transacciones_${usuario}`, JSON.stringify(transacciones));
-
-                    alertContainer.innerHTML = `
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                <strong>Éxito:</strong> Depósito realizado con éxito.
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
-                            </div>
-                        `;
-
-                    setTimeout(() => {
-                        window.location.href = "saldo.html";
-                    }, 1500);
-                } else {
-                    alertContainer.innerHTML = `
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                <strong>Error:</strong> No se encontró un usuario logueado.
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
-                            </div>
-                        `;
-                }
-            } else {
-                alertContainer.innerHTML = `
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <strong>Error:</strong> Ingrese un monto válido.
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
-                        </div>
-                    `;
-            }
-        }
-    </script>
+    <script src="js/script.js"> </script>
 </body>
 </html>

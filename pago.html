@@ -74,58 +74,6 @@
 
     <!-- Bootstrap JS desde CDN -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-    <script>
-        function pagarServicio() {
-            let tipo = document.getElementById("tipo-servicio").value;
-            let monto = parseFloat(document.getElementById("monto-pago").value);
-            let saldo = calcularSaldo();
-            const alertContainer = document.getElementById("alert-container");
-            alertContainer.innerHTML = "";
-
-            if (monto > 0 && monto <= saldo) {
-                const usuario = localStorage.getItem("cuenta");
-                let transacciones = JSON.parse(localStorage.getItem(`transacciones_${usuario}`)) || [];
-
-                let fecha = new Date();
-                let fechaFormateada = fecha.toISOString().split('T')[0];
-
-                transacciones.push({ tipo: tipo, monto: monto, fecha: fechaFormateada });
-                localStorage.setItem(`transacciones_${usuario}`, JSON.stringify(transacciones));
-
-                alertContainer.innerHTML = `
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <strong>Éxito:</strong> ${tipo} pagado con éxito.
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
-                        </div>
-                    `;
-
-                setTimeout(() => {
-                    window.location.href = "saldo.html";
-                }, 1500);
-
-            } else {
-                alertContainer.innerHTML = `
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <strong>Error:</strong> Fondos insuficientes o monto inválido.
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
-                        </div>
-                    `;
-            }
-        }
-
-        function calcularSaldo() {
-            const usuario = localStorage.getItem("cuenta");
-            let saldo = 0;
-            let transacciones = JSON.parse(localStorage.getItem(`transacciones_${usuario}`)) || [];
-
-            transacciones.forEach(transaccion => {
-                if (transaccion.tipo === "Depósito") saldo += transaccion.monto;
-                else if (transaccion.tipo === "Retiro" || transaccion.tipo.includes("Pago de")) saldo -= transaccion.monto;
-            });
-
-            return saldo;
-        }
-    </script>
+    <script src="js/script.js"></script>
 </body>
 </html>

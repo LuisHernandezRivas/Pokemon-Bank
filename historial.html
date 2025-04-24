@@ -51,31 +51,6 @@
 
     <!-- Bootstrap JS desde CDN -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-    <script>
-        let usuario = localStorage.getItem("cuenta");
-        let transacciones = JSON.parse(localStorage.getItem(`transacciones_${usuario}`)) || [];
-        let lista = document.getElementById("historial-lista");
-
-        if (transacciones.length === 0) {
-            lista.innerHTML = '<li class="list-group-item text-center">No hay transacciones registradas.</li>';
-        } else {
-            transacciones.forEach(transaccion => {
-                let li = document.createElement("li");
-                li.className = "list-group-item d-flex justify-content-between align-items-start flex-column text-start";
-
-                let fecha = new Date(transaccion.fecha);
-                let fechaFormateada = `${fecha.getDate().toString().padStart(2, '0')}-${(fecha.getMonth() + 1).toString().padStart(2, '0')}-${fecha.getFullYear()}`;
-
-                li.innerHTML = `
-                        <div><strong>${transaccion.tipo}</strong></div>
-                        <div>Monto: $${transaccion.monto.toFixed(2)}</div>
-                        <small class="text-muted">Fecha: ${fechaFormateada}</small>
-                    `;
-
-                lista.appendChild(li);
-            });
-        }
-    </script>
+    <script src="js/script.js"></script>
 </body>
 </html>

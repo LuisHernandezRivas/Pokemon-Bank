@@ -6,10 +6,8 @@
     <title>Login - Banco Pokémon</title>
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="bootstrap-5.3.3-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
 
-    <!-- Referencia CSS -->
-    <link rel="stylesheet" href="style.css">
 
     <!-- Tus estilos internos -->
     <style>
@@ -219,43 +217,7 @@
     </div>
 
     <!-- Bootstrap JS -->
-    <script src="bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
-
-    <script>
-        function validarPIN() {
-            const usuarioSeleccionado = document.getElementById("cuenta").value;
-            const pinIngresado = document.getElementById("PIN").value;
-
-            const cuentas = {
-                "1001-2233-4455-6677": "1234",
-                "2002-3344-5566-7788": "5678",
-                "3003-4455-6677-8899": "9101",
-                "4004-5566-7788-9900": "1122"
-            };
-
-            const alertContainer = document.getElementById("alert-container");
-            alertContainer.innerHTML = "";
-
-            if (cuentas[usuarioSeleccionado] === pinIngresado) {
-                localStorage.setItem("cuenta", usuarioSeleccionado);
-
-                if (!localStorage.getItem(`transacciones_${usuarioSeleccionado}`)) {
-                    localStorage.setItem(`transacciones_${usuarioSeleccionado}`, JSON.stringify([]));
-                }
-
-                window.location.href = "acciones.html";
-                return false;
-            } else {
-                const alerta = `
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <strong>Error!</strong> Número de cuenta o PIN incorrecto.
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                        </div>
-                    `;
-                alertContainer.innerHTML = alerta;
-                return false;
-            }
-        }
-    </script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js"> </script>
 </body>
 </html>
