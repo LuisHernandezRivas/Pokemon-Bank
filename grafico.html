@@ -7,42 +7,12 @@
 
     <!-- Bootstrap CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <style>
-        body {
-            background: linear-gradient(to right, #4facfe, #00f2fe);
-            font-family: 'Poppins', sans-serif;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .chart-container {
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
-            padding: 30px;
-            width: 100%;
-            max-width: 600px;
-        }
-
-        .btn-custom {
-            background-color: #f44336;
-            color: #fff;
-        }
-
-            .btn-custom:hover {
-                background-color: #d32f2f;
-            }
-    </style>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <div class="chart-container">
+    <div class="container">
         <h2 class="text-center mb-4">Análisis de Transacciones</h2>
 
         <canvas id="transaction-chart" class="mb-4"></canvas>
@@ -54,7 +24,7 @@
             <li class="list-group-item">Saldo Total: <strong id="saldo-total">$0.00</strong></li>
         </ul>
 
-        <a href="acciones.html" class="btn btn-custom w-100">Regresar</a>
+        <a href="acciones.html" class="btn btn-return w-100">Regresar</a>
     </div>
 
     <!-- Bootstrap JS -->

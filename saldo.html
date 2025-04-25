@@ -7,51 +7,16 @@
 
     <!-- Bootstrap CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <style>
-        body {
-            background: linear-gradient(to right, #4facfe, #00f2fe);
-            font-family: 'Poppins', sans-serif;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .balance-container {
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
-            padding: 30px;
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-        }
-
-        .saldo-actual {
-            font-size: 1.8rem;
-            color: #333;
-            font-weight: bold;
-        }
-
-        .btn-custom {
-            background-color: #f44336;
-            color: #fff;
-        }
-
-            .btn-custom:hover {
-                background-color: #d32f2f;
-            }
-    </style>
+    <link rel="stylesheet" href="css/styles.css">
+    
 </head>
 <body>
-    <div class="balance-container">
+    <div class="container">
         <h2 class="mb-4">Consulta de Saldo</h2>
         <div id="alert-container"></div>
         <p>Su saldo actual es:</p>
         <p class="saldo-actual" id="saldo-actual">$0.00</p>
-        <a href="acciones.html" class="btn btn-custom w-100 mt-4">Regresar</a>
+        <a href="acciones.html" class="btn btn-return w-100 mt-4">Regresar</a>
     </div>
 
     <!-- Bootstrap JS -->
